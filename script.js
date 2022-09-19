@@ -46,8 +46,6 @@ const TWAP = false;
 const TWAP_DURATION = 0;
 // SLURP SLURP SLURP
 (async () => {
-  let STRADDLES_POSITIONS = await STRADDLES_CONTRACT.balanceOf(signser.address);
-
   if (!ALREADY_APPROVED_TOKENS_TO_CONTRACT) {
     await PREMIUM_TOKEN_CONTRACT.approve(STRADDLES_CONTRACT_ADDRESS, MAX_VALUE);
   }
