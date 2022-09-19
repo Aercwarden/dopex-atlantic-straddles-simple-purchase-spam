@@ -5,7 +5,7 @@ const { Addresses } = require("@dopex-io/sdk");
 // THE SPOON
 const STRADDLES_INTERFACE = [
   "function purchase( uint256 amount,uint256 swapperId, address user) external whenNotPaused nonReentrant returns (uint256 tokenId)",
-  " function calculatePremium(bool _isPut,uint256 _strike, uint256 _amount,uint256 _expiry) public view returns (uint256 premium)",
+  "function balanceOf(address) external view returns (uint256",
 ];
 const PREMIUM_TOKEN_INTERFACES = [
   " function approve(address spender, uint256 amount) public virtual override returns (bool)",
@@ -38,22 +38,33 @@ const PREMIUM_TOKEN_CONTRACT = new ethers.Contract(
 );
 
 // HOW MUCH CAN YOU TAKE?
-const AMOUNT_OF_OPTIONS_TO_PURCHASE = 0;
+const AMOUNT_OF_STRADDLES_TO_PURCHASE = 0;
+const AMOUNT_OF_OPTIONS_PER_STRADDLE = 0;
 
-const ALREADY_APPROVED_TOKENS_TO_CONTRACT = false(
-  // SLURP SLURP SLURP
-  async () => {
-    let OPTIONS_BALANCE = BigNumber.from(0);
+const ALREADY_APPROVED_TOKENS_TO_CONTRACT = false;
+const TWAP = false;
+const TWAP_DURATION = 0;
+// SLURP SLURP SLURP
+(async () => {
+  let STRADDLES_POSITIONS = await STRADDLES_CONTRACT.balanceOf(signser.address);
 
-    if (!ALREADY_APPROVED_TOKENS_TO_CONTRACT) {
-      await PREMIUM_TOKEN_CONTRACT.approve(
-        STRADDLES_CONTRACT_ADDRESS,
-        MAX_VALUE
-      );
-    }
-
-    while (!OPTIONS_BALANCE.gte(AMOUNT_OF_OPTIONS_TO_PURCHASE)) {
-      await STRADDLES_CONTRACT.purchase(AMOUNT_OF_OPTIONS_TO_PURCHASE, 0, signer.address);
-    }
+  if (!ALREADY_APPROVED_TOKENS_TO_CONTRACT) {
+    await PREMIUM_TOKEN_CONTRACT.approve(STRADDLES_CONTRACT_ADDRESS, MAX_VALUE);
   }
-)();
+
+  if (TWAP) {
+    setInterval(async () => {
+      await STRADDLES_CONTRACT.purchase(
+        AMOUNT_OF_OPTIONS_PER_STRADDLE,
+        0,
+        signer.address
+      );
+    }, TWAP_DURATION);
+  } else {
+    await STRADDLES_CONTRACT.purchase(
+      AMOUNT_OF_OPTIONS_PER_STRADDLE,
+      0,
+      signer.address
+    );
+  }
+})();
