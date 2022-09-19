@@ -1,0 +1,12 @@
+{
+  "name": "dopex-atlantic-straddles-simple-purchase-spam",
+  "version": "1.0.0",
+  "description": "Simple script to purchase dopex atlantic straddles",
+  "main": "index.js",
+  "author": "arcwardeth",
+  "license": "MIT",
+  "dependencies": {
+    "@dopex-io/sdk": "^1.0.0-beta.27",
+    "ethers": "^5.7.1"
+  }
+}
